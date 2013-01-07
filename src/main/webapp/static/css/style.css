@@ -1,0 +1,54 @@
+h2 {
+    color: #595959;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 1.4em;
+    font-weight: normal;
+    margin: 6px 0 0 30px;
+    text-align: left;
+}
+
+h5 {
+    color: #595959;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 1.1em;
+    font-weight: normal;
+    margin: 6px 0 0 30px;
+    text-align: left;
+}
+
+
+#header{
+    height: 49px;
+    padding: 1px;
+    padding-left: 7px;
+    border-bottom: 3px solid #ddd;
+    background-repeat: repeat-x;
+}
+
+.document-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top:57px;
+    bottom:7px;
+    background-color: #f1f1f1;
+}
+
+.pdf-plugin {
+    width:99%;
+    height:100%;
+    min-height: 100%;
+}
+
+.article {
+    max-width: 770px;
+    padding: 10px;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 0.9em;
+}
+
+
+.article h2 {
+    font-weight: bold;
+}
+
