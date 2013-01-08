@@ -23,13 +23,18 @@
     <context:component-scan base-package="org.example.dao"/>
 
 
+    <bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:app.properties"/>
+    </bean>
+
+
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName"><value>com.mysql.jdbc.Driver</value></property>
         <property name="url">
-            <value>jdbc:mysql://127.0.0.1:3306/hibertest</value>
+            <value>${db.url}</value>
         </property>
-        <property name="username"><value>root</value></property>
-        <property name="password"><value></value></property>
+        <property name="username"><value>${db.user}</value></property>
+        <property name="password"><value>${db.pass}</value></property>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -49,7 +54,7 @@
                 -->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
                 <prop key="connection.driver_class">com.mysql.jdbc.Driver</prop>
-                <prop key="hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="show_sql">true</prop>
                 <prop key="format_sql">false</prop>
                 <!--prop key="hibernate.current_session_context_class">thread</prop-->
