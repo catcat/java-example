@@ -49,8 +49,8 @@
         <property name="hibernateProperties">
             <props>
                 <!--
-                   <prop key="connection.username">root</prop>
-                    <prop key="connection.url">jdbc:mysql://127.0.0.1:3306/hibertest</prop>
+                   <prop key="connection.username">${db.user}</prop>
+                    <prop key="connection.url">${db.url}</prop>
                 -->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
                 <prop key="connection.driver_class">com.mysql.jdbc.Driver</prop>
