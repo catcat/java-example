@@ -6,16 +6,24 @@
 <HTML>
 <HEAD>
     <TITLE><jsp:invoke fragment="title"/></TITLE>
-    <link rel="stylesheet" href="static/css/reset.css" type="text/css"/>
-    <link rel="stylesheet" href="static/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="/my/static/css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="/my/static/css/style.css" type="text/css"/>
 </HEAD>
 <BODY>
 
-<div id="header">
-    Header
-</div>
+<div id="global_container">
+    <div id="header">
+        <ul>
+            <li><a href="devices.htm">devices</a></li>
+            <li><a href="devices.htm">devices</a></li>
+            <li><a href="devices.htm">devices</a></li>
+        </ul>
+    </div>
 
-<jsp:doBody/>
+    <div id="body_container">
+        <jsp:doBody/>
+    </div">
+</div>
 
 </BODY>
 </HTML>

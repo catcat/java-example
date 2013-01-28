@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.mappings.Device;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,12 +37,26 @@ public class SimpleDao {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<Customer> getCustomersWithDevices() {
+         public List<Customer> getCustomersWithDevices() {
         Session session = sessionFactory.getCurrentSession();
         List<Customer> customers = session.createQuery("FROM Customer").list();
         for(Customer c: customers) {
             Hibernate.initialize(c.getDevices());
         }
         return customers;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Device> getDevices() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Device> devices = session.createQuery("FROM Device").list();
+        return devices;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Device getDevice(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Device device = (Device)session.load(Device.class, id);
+        return device;
     }
 }

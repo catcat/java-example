@@ -3,6 +3,7 @@ package org.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
@@ -10,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.core.io.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 
 
 import org.example.dao.SimpleDao;
@@ -24,16 +24,26 @@ public class PublicController {
 
 
     @Autowired
-    private WebApplicationContext context;
+    private WebApplicationContext ctx;
 
     @Autowired
     private SimpleDao simpleDao;
 
-    @Autowired
-    private WebApplicationContext ctx;
+    @RequestMapping("/devices.htm")
+    public ModelAndView devicesPage() throws Exception {
+        ModelAndView info =  new ModelAndView("devices");
+        //info.addObject("message", key+simpleDao.getCount());
+        info.addObject("rows", simpleDao.getDevices());
+        return info;
+    }
 
-
-
+    @RequestMapping("/device_edit/{id}.htm")
+    public ModelAndView deviceEditPage(@PathVariable("id") Long id) throws Exception {
+        ModelAndView info =  new ModelAndView("device_edit");
+        //info.addObject("message", key+simpleDao.getCount());
+        info.addObject("row", simpleDao.getDevice(id));
+        return info;
+    }
 
     @RequestMapping("/document.htm")
     public ModelAndView documentPage(@RequestParam("key") String key) throws Exception {

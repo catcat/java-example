@@ -64,6 +64,13 @@
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
 
+
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/uncaught-error.jsp</location>
+    </error-page>
+
+
     <welcome-file-list>
         <welcome-file>
             index.jsp

@@ -23,6 +23,7 @@ h5 {
     padding-left: 7px;
     border-bottom: 3px solid #ddd;
     background-repeat: repeat-x;
+    background-color: #67a22e;
 }
 
 .document-container {
@@ -51,4 +52,48 @@ h5 {
 .article h2 {
     font-weight: bold;
 }
+
+#global_container {
+    margin-left: 64px;
+    margin-top: 15px;
+    padding: 0px;
+    border: 3px solid #67a22e;
+    width: 600px;
+    min-height: 500px;
+}
+
+#body_container {
+    padding: 15px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table td {
+    border: 1px solid #67a22e;
+    padding: 3px;
+}
+
+#header ul {
+    list-style-type: none;
+}
+
+#header ul li {
+    display: inline-block;
+    margin-left: 15px;
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: sans-serif;
+
+
+}
+
+
+#header ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
 

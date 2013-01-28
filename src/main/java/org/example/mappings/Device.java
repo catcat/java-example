@@ -1,6 +1,7 @@
 package org.example.mappings;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,16 +11,16 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Device {
-    private int id;
+public class Device implements Serializable {
+    private long id;
 
     @javax.persistence.Column(name = "id")
     @Id
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,15 +57,15 @@ public class Device {
 
         if (id != device.id) return false;
         if (score != device.score) return false;
-        if (name != null ? !name.equals(device.name) : device.name != null) return false;
+        if (!name.equals(device.name)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
         result = 31 * result + score;
         return result;
     }

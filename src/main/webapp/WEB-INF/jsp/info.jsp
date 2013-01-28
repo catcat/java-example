@@ -7,6 +7,7 @@
     </jsp:attribute>
 
     <jsp:body>
+
         <div class="article">
             ${message}
         </div>

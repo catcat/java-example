@@ -12,15 +12,15 @@ import java.util.List;
  */
 @Entity
 public class Customer {
-    private int id;
+    private long id;
 
     @javax.persistence.Column(name = "id")
     @Id
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -80,22 +80,18 @@ public class Customer {
 
         if (discountAmount != customer.discountAmount) return false;
         if (id != customer.id) return false;
-        if (description != null ? !description.equals(customer.description) : customer.description != null)
-            return false;
-        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
+        if (!description.equals(customer.description)) return false;
+        if (!name.equals(customer.name)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
         result = 31 * result + discountAmount;
         return result;
     }
-
-
-
 }
