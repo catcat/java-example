@@ -17,8 +17,11 @@
                     <a href="device_edit/${row.id}.htm">
                         ${row.name}
                     </a>
-                </td>
+                <td>
                     ${row.score}
+                </td>
+                <td>
+                    ${row.customer.name}
                 </td>
             </tr>
         </c:forEach>
