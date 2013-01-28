@@ -1,11 +1,13 @@
 package org.example.controller;
 
+import org.example.mappings.Customer;
+import org.example.mappings.Device;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.core.io.Resource;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.example.dao.SimpleDao;
 
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorSupport;
 
 
 @Controller
@@ -29,6 +33,23 @@ public class PublicController {
     @Autowired
     private SimpleDao simpleDao;
 
+    @InitBinder
+    protected void initBinder(HttpServletRequest request,
+                              ServletRequestDataBinder binder) throws Exception {
+
+        binder.registerCustomEditor(Customer.class, new PropertyEditorSupport(){
+            @Override
+            public void setAsText(String text) throws IllegalArgumentException {
+                if("NONE".equals(text)){
+                    super.setValue(null);
+                } else {
+                    Customer customer = simpleDao.getCustomer(Long.parseLong(text));
+                    super.setValue(customer);
+                }
+            }
+        });
+    }
+
     @RequestMapping("/devices.htm")
     public ModelAndView devicesPage() throws Exception {
         ModelAndView info =  new ModelAndView("devices");
@@ -41,8 +62,15 @@ public class PublicController {
     public ModelAndView deviceEditPage(@PathVariable("id") Long id) throws Exception {
         ModelAndView info =  new ModelAndView("device_edit");
         //info.addObject("message", key+simpleDao.getCount());
-        info.addObject("row", simpleDao.getDevice(id));
+        info.addObject("customers", simpleDao.getCustomers());
+        info.addObject("command", simpleDao.getDevice(id));
         return info;
+    }
+
+    @RequestMapping(value = "/device_edit_post.htm", method = RequestMethod.POST)
+    public String deviceEditPost(@ModelAttribute("device")Device device, BindingResult result) {
+        simpleDao.updateDevice(device);
+        return "redirect:devices.htm";
     }
 
     @RequestMapping("/document.htm")
@@ -53,7 +81,6 @@ public class PublicController {
         info.addObject("customers", simpleDao.getCustomersWithDevices());
         return info;
     }
-
 
     @RequestMapping("/ya.htm")
     public void ya(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -37,7 +37,17 @@ public class SimpleDao {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-         public List<Customer> getCustomersWithDevices() {
+    public List<Customer> getCustomers() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Customer> customers = session.createQuery("FROM Customer").list();
+        for(Customer c: customers) {
+            Hibernate.initialize(c.getDevices());
+        }
+        return customers;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Customer> getCustomersWithDevices() {
         Session session = sessionFactory.getCurrentSession();
         List<Customer> customers = session.createQuery("FROM Customer").list();
         for(Customer c: customers) {
@@ -57,6 +67,27 @@ public class SimpleDao {
     public Device getDevice(Long id) {
         Session session = sessionFactory.getCurrentSession();
         Device device = (Device)session.load(Device.class, id);
+        Hibernate.initialize(device);
         return device;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Customer getCustomer(Long id) {
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = (Customer)session.load(Customer.class, id);
+        Hibernate.initialize(customer);
+        return customer;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void saveDevice(Device row) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(row);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void updateDevice(Device row) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(row);
     }
 }

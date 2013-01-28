@@ -78,10 +78,8 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (discountAmount != customer.discountAmount) return false;
         if (id != customer.id) return false;
-        if (!description.equals(customer.description)) return false;
-        if (!name.equals(customer.name)) return false;
+        if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
 
         return true;
     }
@@ -89,9 +87,7 @@ public class Customer {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + description.hashCode();
-        result = 31 * result + discountAmount;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 }

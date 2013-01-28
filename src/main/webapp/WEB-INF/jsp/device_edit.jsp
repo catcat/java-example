@@ -1,5 +1,6 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <t:global>
     <jsp:attribute name="title">
@@ -8,26 +9,31 @@
 
     <jsp:body>
         <h2>Edit Device</h2>
-        <form>
+        <form:form method="post" action="/my/device_edit_post.htm">
             <table>
                 <tr>
-                    <td>id</td>
-                    <td>${row.id}</td>
+                    <td><form:label path="id">Id</form:label></td>
+                    <td>
+                        ${row.id}
+                        <form:hidden path="id"/>
+                    </td>
                 </tr>
                 <tr>
-                    <td>name</td>
-                    <td><input type="text"></td>
+                    <td><form:label path="name">Name</form:label></td>
+                    <td><form:input path="name" /></td>
                 </tr>
                 <tr>
-                    <td>score</td>
-                    <td><input type="text"></td>
+                    <td><form:label path="score">Score</form:label></td>
+                    <td><form:input path="score" /></td>
                 </tr>
                 <tr>
                     <td>Customer</td>
                     <td>
-                        <select>
-                            <option>Item</option>
-                        </select>
+
+                        <form:select path="customer">
+                            <form:option value="NONE" label="Select One" />
+                            <form:options items="${customers}" itemLabel="name" itemValue="id" />
+                        </form:select>
                     </td>
                 </tr>
                 <tr>
@@ -37,6 +43,6 @@
                 </tr>
             </table>
 
-        </form>
+        </form:form>
     </jsp:body>
 </t:global>

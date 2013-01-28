@@ -15,8 +15,7 @@
     <div id="header">
         <ul>
             <li><a href="devices.htm">devices</a></li>
-            <li><a href="devices.htm">devices</a></li>
-            <li><a href="devices.htm">devices</a></li>
+            <li><a href="ya.htm">webpage</a></li>
         </ul>
     </div>
 
