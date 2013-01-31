@@ -3,6 +3,10 @@ package org.example.controller;
 import org.example.mappings.Customer;
 import org.example.mappings.Device;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -23,6 +27,8 @@ import org.example.dao.SimpleDao;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 @Controller
@@ -58,6 +64,26 @@ public class PublicController {
                 }
             }
         });
+    }
+
+    @RequestMapping(value = "/txtEntity.htm")
+    @ResponseBody
+    public ResponseEntity<String> txtPageEntity() throws Exception {
+        String rawText = "Hello\n World!";
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.TEXT_PLAIN);
+        return new ResponseEntity<String>(rawText, responseHeaders, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/txt.htm", produces = "text/plain")
+    @ResponseBody
+    public String txtPage() throws Exception {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0; i<100;i++) {
+            sb.append(String.format("i=%d\n", i));
+        }
+        return sb.toString();
     }
 
     @RequestMapping("/devices.htm")
