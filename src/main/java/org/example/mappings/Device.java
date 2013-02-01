@@ -2,6 +2,7 @@ package org.example.mappings;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,6 +47,31 @@ public class Device implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+
+    private Date created;
+
+    @javax.persistence.Column(name = "created")
+    @Basic
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    private boolean active;
+
+    @javax.persistence.Column(name = "active")
+    @Basic
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

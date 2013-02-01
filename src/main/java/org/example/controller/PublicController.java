@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.mappings.Customer;
 import org.example.mappings.Device;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,8 +28,10 @@ import org.example.dao.SimpleDao;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 
 @Controller
@@ -51,6 +54,11 @@ public class PublicController {
         binder.setDisallowedFields(new String[] {"id"});
         binder.setAllowedFields(new String[] {"score"});
         */
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+
         binder.setRequiredFields(new String[] {"name"});
 
         binder.registerCustomEditor(Customer.class, new PropertyEditorSupport(){

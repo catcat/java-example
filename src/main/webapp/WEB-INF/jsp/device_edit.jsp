@@ -35,6 +35,20 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><form:label path="active">Active</form:label></td>
+                    <td>
+                        <form:checkbox path="active" />
+                        <form:errors path="active"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><form:label path="active">Created</form:label></td>
+                    <td>
+                        <form:input path="created" />
+                        <form:errors path="created"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>Customer</td>
                     <td>
 
