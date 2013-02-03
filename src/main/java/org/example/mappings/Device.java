@@ -1,6 +1,8 @@
 package org.example.mappings;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,6 +30,8 @@ public class Device implements Serializable {
     private String name;
 
     @javax.persistence.Column(name = "name")
+    @NotNull
+    @Size(max=8)
     @Basic
     public String getName() {
         return name;
