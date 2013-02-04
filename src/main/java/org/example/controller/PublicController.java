@@ -122,8 +122,10 @@ public class PublicController {
         ModelAndView info =  new ModelAndView("device_edit");
         //info.addObject("message", key+simpleDao.getCount());
         info.addObject("customers", simpleDao.getCustomers());
-        info.addObject("tags", device.getTags());
         info.addObject("device", device);
+
+        info.addObject("currentTags", device.getTags());
+        info.addObject("allTags", device.getTags());
         return info;
     }
 

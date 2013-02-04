@@ -66,12 +66,20 @@
                 </tr>
             </table>
 
-            Tags:
+            Current tags:
             <ul>
-                <c:forEach items="${tags}" var="tag">
+                <c:forEach items="${currentTags}" var="tag">
                     <li>${tag.name}</li>
                 </c:forEach>
             </ul>
+
+            All tags:
+            <ul>
+                <c:forEach items="${allTags}" var="tag">
+                    <li>${tag.name}</li>
+                </c:forEach>
+            </ul>
+
 
         </form:form>
     </jsp:body>

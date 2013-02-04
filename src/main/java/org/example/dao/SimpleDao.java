@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.mappings.Device;
+import org.example.mappings.Tag;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -56,6 +57,14 @@ public class SimpleDao {
         return customers;
     }
 
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Tag> getTags() {
+        Session session = sessionFactory.getCurrentSession();
+        List<Tag> tags = session.createQuery("FROM Tag").list();
+        return tags;
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Device> getDevices() {
         Session session = sessionFactory.getCurrentSession();
@@ -93,4 +102,6 @@ public class SimpleDao {
         row.setTags(oldDevice.getTags());//todo: find what is the standard workaround
         session.merge(row);
     }
+
+
 }
