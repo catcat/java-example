@@ -5,16 +5,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: ag
- * Date: 12/20/12
- * Time: 11:47 PM
- * To change this template use File | Settings | File Templates.
- */
 @Entity
 public class Device implements Serializable {
+
     private long id;
 
     @javax.persistence.Column(name = "id")
@@ -110,5 +105,20 @@ public class Device implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    private List<Tag> tags;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "devices_tags", joinColumns = {
+            @JoinColumn(name = "device_id", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id",
+                    nullable = false, updatable = false) })
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 }

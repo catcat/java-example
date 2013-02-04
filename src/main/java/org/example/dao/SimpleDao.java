@@ -68,6 +68,7 @@ public class SimpleDao {
         Session session = sessionFactory.getCurrentSession();
         Device device = (Device)session.load(Device.class, id);
         Hibernate.initialize(device);
+        Hibernate.initialize(device.getTags());
         return device;
     }
 
@@ -88,6 +89,8 @@ public class SimpleDao {
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateDevice(Device row) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(row);
+        Device oldDevice = getDevice(row.getId());
+        row.setTags(oldDevice.getTags());//todo: find what is the standard workaround
+        session.merge(row);
     }
 }

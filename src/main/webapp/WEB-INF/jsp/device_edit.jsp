@@ -16,7 +16,7 @@
                 <tr>
                     <td><form:label path="id">Id</form:label></td>
                     <td>
-                        ${command.id}
+                        ${device.id}
                         <form:hidden path="id"/>
                     </td>
                 </tr>
@@ -65,6 +65,13 @@
                     </td>
                 </tr>
             </table>
+
+            Tags:
+            <ul>
+                <c:forEach items="${tags}" var="tag">
+                    <li>${tag.name}</li>
+                </c:forEach>
+            </ul>
 
         </form:form>
     </jsp:body>
