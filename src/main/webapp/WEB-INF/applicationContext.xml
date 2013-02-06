@@ -22,6 +22,7 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <context:component-scan base-package="org.example.dao"/>
 
+    <import resource="activemq-config.xml"/>
 
     <bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:app.properties"/>
@@ -73,4 +74,6 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+
 </beans>

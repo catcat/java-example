@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.example.mappings.Customer;
 import org.example.mappings.Device;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
@@ -19,6 +22,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.core.io.Resource;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -45,6 +52,9 @@ public class PublicController {
 
     @Autowired
     private SimpleDao simpleDao;
+
+    @Autowired
+    private JmsTemplate jmsTemplate;
 
     @InitBinder("device")
     protected void initBinder(HttpServletRequest request,
@@ -110,10 +120,19 @@ public class PublicController {
     }
 
     @RequestMapping(value = "/simpleform.htm", method = RequestMethod.POST)
-    public ModelAndView simpleformPagePost(@RequestParam("msg") String msg ) throws Exception {
+    public ModelAndView simpleformPagePost(final @RequestParam("msg") String msg ) throws Exception {
         ModelAndView info =  new ModelAndView("simpleform");
         //info.addObject("message", key+simpleDao.getCount());
         info.addObject("msg", msg);
+
+        if(!StringUtils.isEmpty(msg)) {
+            jmsTemplate.send("msgQueue", new MessageCreator() {
+                public Message createMessage(Session session) throws JMSException {
+                    return session.createTextMessage(msg);
+                }
+            });
+        }
+
         return info;
     }
 
