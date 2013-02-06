@@ -14,6 +14,7 @@
 <div id="global_container">
     <div id="header">
         <ul>
+            <li><a href="/my/simpleform.htm">simpleform</a></li>
             <li><a href="/my/devices.htm">devices</a></li>
             <li><a href="/my/txt.htm">text</a></li>
             <li><a href="/my/txtEntity.htm">text entity</a></li>
