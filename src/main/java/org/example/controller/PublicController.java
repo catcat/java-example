@@ -101,6 +101,21 @@ public class PublicController {
         info.addObject("rows", simpleDao.getDevices());
         return info;
     }
+    @RequestMapping(value = "/simpleform.htm", method = RequestMethod.GET)
+    public ModelAndView simpleformPageGet() throws Exception {
+        ModelAndView info =  new ModelAndView("simpleform");
+        //info.addObject("message", key+simpleDao.getCount());
+        //info.addObject("msg", "None");
+        return info;
+    }
+
+    @RequestMapping(value = "/simpleform.htm", method = RequestMethod.POST)
+    public ModelAndView simpleformPagePost(@RequestParam("msg") String msg ) throws Exception {
+        ModelAndView info =  new ModelAndView("simpleform");
+        //info.addObject("message", key+simpleDao.getCount());
+        info.addObject("msg", msg);
+        return info;
+    }
 
     @RequestMapping("/device_edit/{id}.htm")
     public ModelAndView deviceEditPage(@PathVariable("id") Long id) throws Exception {
