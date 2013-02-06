@@ -35,4 +35,21 @@
             <ref local="jmsFactory"/>
         </property>
     </bean>
+
+
+    <bean id="myListener" class="org.example.message.MyListener" />
+
+
+    <!-- JMS Destination -->
+    <bean id="destination"
+          class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="msgQueue"/>
+    </bean>
+
+    <!-- and this is the message listener container -->
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="jmsFactory"/>
+        <property name="destination" ref="destination"/>
+        <property name="messageListener" ref="myListener" />
+    </bean>
 </beans>
