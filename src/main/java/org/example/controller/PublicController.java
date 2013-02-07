@@ -127,7 +127,7 @@ public class PublicController {
 
         if(!StringUtils.isEmpty(msg)) {
             for(int i=0;i<100;i++) {
-                jmsTemplate.send("msgQueue", new MessageCreator() {
+                jmsTemplate.send("My.msgQueue,My.otherQueue,topic://My.firstTopic", new MessageCreator() {
                     public Message createMessage(Session session) throws JMSException {
                         Integer value = (int)(Math.random()*1000.);
                         Message  message =  session.createTextMessage(msg + ":" + value);

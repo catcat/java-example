@@ -43,7 +43,7 @@
     <!-- JMS Destination -->
     <bean id="destination"
           class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="msgQueue"/>
+        <constructor-arg value="*.msgQueue"/>
     </bean>
 
     <!-- and this is the message listener container -->
