@@ -50,6 +50,7 @@
     <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
         <property name="connectionFactory" ref="jmsFactory"/>
         <property name="destination" ref="destination"/>
+        <property name="messageSelector" value="MYWEIGHT BETWEEN 500 AND 1000"/>
         <property name="messageListener" ref="myListener" />
     </bean>
 </beans>

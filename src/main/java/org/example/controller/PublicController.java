@@ -126,11 +126,16 @@ public class PublicController {
         info.addObject("msg", msg);
 
         if(!StringUtils.isEmpty(msg)) {
-            jmsTemplate.send("msgQueue", new MessageCreator() {
-                public Message createMessage(Session session) throws JMSException {
-                    return session.createTextMessage(msg);
-                }
-            });
+            for(int i=0;i<100;i++) {
+                jmsTemplate.send("msgQueue", new MessageCreator() {
+                    public Message createMessage(Session session) throws JMSException {
+                        Integer value = (int)(Math.random()*1000.);
+                        Message  message =  session.createTextMessage(msg + ":" + value);
+                        message.setIntProperty("MYWEIGHT", value);
+                        return message;
+                    }
+                });
+            }
         }
 
         return info;
