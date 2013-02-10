@@ -9,15 +9,18 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form:errors path="*"/>
+
+
         <h2><spring:message code="label.edit.device"/></h2>
         <form:form method="post" action="/my/device_edit_post.htm" modelAttribute="device">
+            <form:errors/>
             <table>
                 <tr>
                     <td><form:label path="id">Id</form:label></td>
                     <td>
                         ${device.id}
                         <form:hidden path="id"/>
+                        <form:hidden path="version"/>
                     </td>
                 </tr>
                 <tr>

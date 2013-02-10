@@ -3,8 +3,12 @@ package org.example.controller;
 import org.apache.commons.lang.StringUtils;
 import org.example.mappings.Customer;
 import org.example.mappings.Device;
+import org.hibernate.StaleObjectStateException;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,13 +46,18 @@ import java.util.Date;
 
 
 @Controller
-public class PublicController {
+public class PublicController implements ApplicationContextAware {
 
     //private static final Logger log = Logger.getLogger(PublicController.class);
 
 
-    @Autowired
+    //@Autowired
     private WebApplicationContext ctx;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ctx = (WebApplicationContext)applicationContext;
+    }
 
     @Autowired
     private SimpleDao simpleDao;
@@ -104,6 +113,12 @@ public class PublicController {
         return sb.toString();
     }
 
+
+    @RequestMapping("/")
+    public ModelAndView home() throws Exception {
+        return devicesPage();
+    }
+
     @RequestMapping("/devices.htm")
     public ModelAndView devicesPage() throws Exception {
         ModelAndView info =  new ModelAndView("devices");
@@ -153,7 +168,14 @@ public class PublicController {
         if(result.hasErrors()) {
             return deiceForm(device);
         }
-        simpleDao.updateDevice(device);
+        try {
+            simpleDao.updateDevice(device);
+        } catch (StaleObjectStateException ex){
+            result.reject("validation.version");
+            return deiceForm(device);
+            //return deiceForm(simpleDao.getDevice(device.getId()));
+        }
+
         return new ModelAndView("redirect:devices.htm");
     }
 
