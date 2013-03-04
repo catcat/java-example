@@ -64,6 +64,36 @@
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>applesServlet</servlet-name>
+        <servlet-class>org.example.servlet.ApplesServlet</servlet-class>
+        <init-param>
+            <param-name>lol</param-name>
+            <param-value>AppleLol</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>orangesServlet</servlet-name>
+        <servlet-class>org.example.servlet.OrangesServlet</servlet-class>
+        <init-param>
+            <param-name>lol</param-name>
+            <param-value>OrangesLol</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>applesServlet</servlet-name>
+        <url-pattern>/apples.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>orangesServlet</servlet-name>
+        <url-pattern>/oranges.do</url-pattern>
+    </servlet-mapping>
+
 
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
