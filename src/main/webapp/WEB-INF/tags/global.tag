@@ -19,6 +19,7 @@
             <li><a href="/my/txt.htm">text</a></li>
             <li><a href="/my/txtEntity.htm">text entity</a></li>
             <li><a href="/my/ya.htm">webpage</a></li>
+            <li><a href="/my/xslt.htm">xslt</a></li>
             <li><a href="/my/apples.do">apples</a></li>
             <li><a href="/my/oranges.do">oranges</a></li>
 

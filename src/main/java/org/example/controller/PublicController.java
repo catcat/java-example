@@ -27,6 +27,13 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.core.io.Resource;
 
+import javax.servlet.ServletContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -39,6 +46,7 @@ import org.example.dao.SimpleDao;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -203,6 +211,17 @@ public class PublicController implements ApplicationContextAware {
     public void ya(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Resource webpage = ctx.getResource("http://ya.ru");
         FileCopyUtils.copy(webpage.getInputStream(), response.getOutputStream());
+    }
+
+    @RequestMapping("/xslt.htm")
+    public void xslt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Resource data = ctx.getResource("/WEB-INF/xsltest/data.xml");
+        Resource transform = ctx.getResource("/WEB-INF/xsltest/transform.xsl");
+
+        TransformerFactory tFactory = TransformerFactory.newInstance();
+        Transformer transformer = tFactory.newTransformer(new StreamSource(transform.getInputStream()));
+        transformer.transform(new StreamSource(data.getInputStream()), new StreamResult(response.getOutputStream()));
     }
 
     private ModelAndView getErrorMav(String message) {
