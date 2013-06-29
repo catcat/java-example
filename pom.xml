@@ -8,6 +8,11 @@
     <name>MyExample</name>
     <url>http://maven.apache.org</url>
 
+    <properties>
+        <cxf.version>2.0.9</cxf.version>
+    </properties>
+
+
     <dependencies>
 
         <dependency>
@@ -167,10 +172,23 @@
             <version>5.7.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-api</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+
     </dependencies>
-
-
-
 
     <build>
         <finalName>MyExample</finalName>
@@ -189,7 +207,36 @@
                 </includes>
             </resource>
         </resources>
+    <plugins>
+
+
+        <plugin>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-codegen-plugin</artifactId>
+            <version>${cxf.version}</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.cxf</groupId>
+                    <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                    <version>${cxf.version}</version>
+            </dependency>
+        </dependencies>
+        <executions>
+                <execution>
+                    <id>generate-wsdl</id>
+                    <phase>process-classes</phase>
+                    <configuration>
+                        <className>org.example.webservice.MyWebService</className>
+                    </configuration>
+                    <goals>
+                        <goal>java2wsdl</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
     </build>
+
 
 
 

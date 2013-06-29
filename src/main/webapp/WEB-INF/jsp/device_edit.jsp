@@ -12,7 +12,7 @@
 
 
         <h2><spring:message code="label.edit.device"/></h2>
-        <form:form method="post" action="/my/device_edit_post.htm" modelAttribute="device">
+        <form:form method="post" action="/my/device_edit_post.htm" modelAttribute="device" class="well">
             <form:errors/>
             <table>
                 <tr>
@@ -64,7 +64,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Submit" class="btn">
                     </td>
                 </tr>
             </table>

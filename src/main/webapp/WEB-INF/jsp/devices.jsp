@@ -9,7 +9,7 @@
 
     <jsp:body>
         <h1>Simple forEach</h1>
-        <table>
+        <table class="table table-striped">
         <c:forEach items="${rows}" var="row">
             <tr>
                 <td>
