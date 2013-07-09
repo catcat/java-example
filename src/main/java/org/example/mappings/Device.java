@@ -63,7 +63,7 @@ public class Device implements Serializable {
 
     private boolean active;
 
-    @javax.persistence.Column(name = "active")
+    @javax.persistence.Column(name = "active", columnDefinition = "TINYINT", length = 1)
     @Basic
     public boolean isActive() {
         return active;
