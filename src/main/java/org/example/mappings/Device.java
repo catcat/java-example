@@ -121,4 +121,16 @@ public class Device implements Serializable {
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
+
+    private Long version;
+
+    @Version
+    @Column(name="OPTLOCK")
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }

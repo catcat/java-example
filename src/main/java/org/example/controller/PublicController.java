@@ -3,8 +3,12 @@ package org.example.controller;
 import org.apache.commons.lang.StringUtils;
 import org.example.mappings.Customer;
 import org.example.mappings.Device;
+import org.hibernate.StaleObjectStateException;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +27,13 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.core.io.Resource;
 
+import javax.servlet.ServletContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.*;
+import javax.xml.transform.stream.*;
+
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -35,6 +46,7 @@ import org.example.dao.SimpleDao;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,13 +54,18 @@ import java.util.Date;
 
 
 @Controller
-public class PublicController {
+public class PublicController implements ApplicationContextAware {
 
     //private static final Logger log = Logger.getLogger(PublicController.class);
 
 
-    @Autowired
+    //@Autowired
     private WebApplicationContext ctx;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ctx = (WebApplicationContext)applicationContext;
+    }
 
     @Autowired
     private SimpleDao simpleDao;
@@ -104,6 +121,12 @@ public class PublicController {
         return sb.toString();
     }
 
+
+    @RequestMapping("/")
+    public ModelAndView home() throws Exception {
+        return devicesPage();
+    }
+
     @RequestMapping("/devices.htm")
     public ModelAndView devicesPage() throws Exception {
         ModelAndView info =  new ModelAndView("devices");
@@ -153,7 +176,14 @@ public class PublicController {
         if(result.hasErrors()) {
             return deiceForm(device);
         }
-        simpleDao.updateDevice(device);
+        try {
+            simpleDao.updateDevice(device);
+        } catch (StaleObjectStateException ex){
+            result.reject("validation.version");
+            return deiceForm(device);
+            //return deiceForm(simpleDao.getDevice(device.getId()));
+        }
+
         return new ModelAndView("redirect:devices.htm");
     }
 
@@ -181,6 +211,17 @@ public class PublicController {
     public void ya(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Resource webpage = ctx.getResource("http://ya.ru");
         FileCopyUtils.copy(webpage.getInputStream(), response.getOutputStream());
+    }
+
+    @RequestMapping("/xslt.htm")
+    public void xslt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        Resource data = ctx.getResource("/WEB-INF/xsltest/data.xml");
+        Resource transform = ctx.getResource("/WEB-INF/xsltest/transform.xsl");
+
+        TransformerFactory tFactory = TransformerFactory.newInstance();
+        Transformer transformer = tFactory.newTransformer(new StreamSource(transform.getInputStream()));
+        transformer.transform(new StreamSource(data.getInputStream()), new StreamResult(response.getOutputStream()));
     }
 
     private ModelAndView getErrorMav(String message) {

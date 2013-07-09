@@ -7,11 +7,12 @@
 <HEAD>
     <TITLE><jsp:invoke fragment="title"/></TITLE>
     <link rel="stylesheet" href="/my/static/css/reset.css" type="text/css"/>
+    <link rel="stylesheet" href="/my/static/bootstrap/css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="/my/static/css/style.css" type="text/css"/>
 </HEAD>
 <BODY>
 
-<div id="global_container">
+<div id="global_container"  class="container">
     <div id="header">
         <ul>
             <li><a href="/my/simpleform.htm">simpleform</a></li>
@@ -19,6 +20,12 @@
             <li><a href="/my/txt.htm">text</a></li>
             <li><a href="/my/txtEntity.htm">text entity</a></li>
             <li><a href="/my/ya.htm">webpage</a></li>
+            <li><a href="/my/xslt.htm">xslt</a></li>
+            <li><a href="/my/apples.do">apples</a></li>
+            <li><a href="/my/oranges.do">oranges</a></li>
+            <li><a href="/my/services/myWebService">webservice</a></li>
+
+
         </ul>
     </div>
 

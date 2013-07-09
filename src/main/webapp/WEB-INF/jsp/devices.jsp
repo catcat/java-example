@@ -9,7 +9,7 @@
 
     <jsp:body>
         <h1>Simple forEach</h1>
-        <table>
+        <table class="table table-striped">
         <c:forEach items="${rows}" var="row">
             <tr>
                 <td>
@@ -36,6 +36,27 @@
             <display:column property="score" sortName="score" title="score" sortable="true" sortProperty="score" style="width:200px"/>
             <display:column property="customer.name" sortName="customer.name" title="Customer" sortable="true" sortProperty="customer.name" style="width:200px" />
         </display:table>
+
+        <hr/>
+
+        <t:orange
+                hello0="word0"
+                hello1="word1"
+                hello2="word2"
+                hello3="word3"
+                hello4="word4"
+                >
+                <jsp:attribute name="title">
+                    My<b>Title</b>
+                </jsp:attribute>
+                <jsp:attribute name="titleFragment">
+                    My<b>Title</b>
+                </jsp:attribute>
+                <jsp:body>
+                    My<b>Body</b>
+                </jsp:body>
+
+        </t:orange>
 
     </jsp:body>
 </t:global>
