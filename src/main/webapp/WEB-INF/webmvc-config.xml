@@ -7,6 +7,7 @@
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="org.example.controller" />
+    <context:component-scan base-package="org.example.global" />
 
     <mvc:resources mapping="/static/**" location="/static/" />
 

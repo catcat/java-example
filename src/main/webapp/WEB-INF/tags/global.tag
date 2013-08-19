@@ -34,5 +34,10 @@
     </div">
 </div>
 
+<div>
+ global: ${globalModelAttr1}
+</div>
+
+
 </BODY>
 </HTML>
